@@ -15,6 +15,11 @@ namespace BPS
 
         #region Constructors
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="data"></param>
         public Section(string name, List<Data> data)
         {
             Name = name;
@@ -37,14 +42,47 @@ namespace BPS
 
         #region Public
 
-        public void AddData(Data data)
+        
+        public bool Add(Data data)
         {
-            Data.Add(data);
+            if (!Exists(data.Key))
+            {
+                Data.Add(data);
+                return true;
+            }
+            return false;
         }
 
-        public bool RemoveData(string key)
+        public bool AlterKey(string dataKey, string newDataKey)
         {
-            foreach(var d in Data)
+            if (Exists(dataKey))
+            {
+                Find(dataKey).Key = newDataKey;
+                return true;
+            }
+            return false;
+        }
+
+        public bool AlterValue(string dataKey, string newValue)
+        {
+            if (Exists(dataKey))
+            {
+                Find(dataKey).Value = newValue;
+                return true;
+            }
+            return false;
+        }
+
+
+        public void RemoveAll()
+        {
+            Data.Clear();
+        }
+
+        
+        public bool Remove(string key)
+        {
+            foreach (var d in Data)
             {
                 if (d.Key.Equals(key))
                 {
@@ -53,6 +91,31 @@ namespace BPS
                 }
             }
             return false;
+        }
+
+        
+        public Data Find(string dataKey)
+        {
+            foreach(Data d in Data)
+            {
+                if (d.Key.Equals(dataKey))
+                {
+                    return d;
+                }
+            }
+            return null;
+        }
+
+        
+        public string FindValue(string dataKey)
+        {
+            return Find(dataKey).Value;
+        }
+
+        
+        public bool Exists(string dataKey)
+        {
+            return Find(dataKey) != null ? true : false;
         }
 
         #endregion Public

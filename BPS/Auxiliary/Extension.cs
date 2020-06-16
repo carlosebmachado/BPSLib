@@ -18,20 +18,26 @@
         /// <param name="path">File path</param>
         internal static string Normalize(string path)
         {
-            string normalized = "";
-            if (path.Length > 4)
+            int length = path.Length;
+            if (length > 4)
             {
-                int length = path.Length;
                 if (!path.Substring(length - 4, 4).Equals(FILENAME_EXTENSION))
                 {
-                    normalized = path + FILENAME_EXTENSION;
+                    return path + FILENAME_EXTENSION;
+                }
+                else
+                {
+                    return path;
                 }
             }
-            else if (!path.Equals(FILENAME_EXTENSION))
+            else if (path.Equals(FILENAME_EXTENSION))
             {
-                normalized = path + FILENAME_EXTENSION;
+                return path;
             }
-            return normalized;
+            else
+            {
+                return path + FILENAME_EXTENSION;
+            }
         }
 
         #endregion Public

@@ -9,7 +9,7 @@ namespace Tester
     {
         static void Main(string[] args)
         {
-            //ReadWrite_Test();
+            ReadWrite_Test();
             //RemoveData_Test();
             //RemoveSection_Test();
             //FindSection_Test();
@@ -41,7 +41,7 @@ namespace Tester
         {
             BPSFile bpsFile = BPSReader.Read("../../../../read_test");
 
-            bpsFile.RemoveData("section", "key_one");
+            bpsFile.RemoveData("section", "key");
 
             BPSWriter.Write(bpsFile, "../../../../write_test");
         }
@@ -61,7 +61,7 @@ namespace Tester
 
         public static void ReadWrite_Test()
         {
-            BPSFile bpsFile = BPSReader.Read("../../../../read_test");
+            BPSFile bpsFile = BPSReader.Read("../../../../read_test.bps");
 
             foreach(var s in bpsFile.Sections)
             {

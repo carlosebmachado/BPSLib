@@ -1,0 +1,16 @@
+# BPS File
+
+<section
+    key:value
+    key_underline:Value With Upper
+    keyCammelCase:false
+    Key:value with spaces
+>
+
+<section_two
+    this_is_a_key:Fisrt value
+    key_two:1
+    key:55
+    hi:oi
+>
+

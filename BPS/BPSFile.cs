@@ -1,6 +1,4 @@
-﻿using BPS.Auxiliary;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BPS
 {
@@ -42,11 +40,6 @@ namespace BPS
 
         #region Public
 
-        public void DeleteAll()
-        {
-            Sections.Clear();
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -70,18 +63,56 @@ namespace BPS
         /// <returns></returns>
         public bool AddData(string sectionName, Data data)
         {
-            if (!SectionExists(sectionName))
+            if (SectionExists(sectionName))
             {
-                AddSection(new Section(sectionName));
+                return FindSection(sectionName).Add(data);
             }
-            if (!DataExists(sectionName, data.Key))
+            return false;
+        }
+
+        public bool AlterSectionName(string sectionName, string newSectionName)
+        {
+            if (SectionExists(sectionName))
             {
-                FindSection(sectionName).AddData(data);
+                FindSection(sectionName).Name = newSectionName;
                 return true;
             }
             return false;
         }
 
+        public bool AlterDataKey(string sectionName, string dataKey, string newDataKey)
+        {
+            if (SectionExists(sectionName))
+            {
+                FindSection(sectionName).AlterKey(dataKey, newDataKey);
+                return true;
+            }
+            return false;
+        }
+
+        public bool AlterValue(string sectionName, string dataKey, string newValue)
+        {
+            if (SectionExists(sectionName))
+            {
+                FindSection(sectionName).AlterValue(dataKey, newValue);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// It deletes all content of a BPS file.
+        /// </summary>
+        public void RemoveAll()
+        {
+            Sections.Clear();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sectionName"></param>
+        /// <returns></returns>
         public bool RemoveSection(string sectionName)
         {
             if (SectionExists(sectionName))
@@ -102,16 +133,16 @@ namespace BPS
         {
             if (SectionExists(sectionName))
             {
-                if (DataExists(sectionName, dataKey))
-                {
-                    FindSection(sectionName).RemoveData(dataKey);
-                    return true;
-                }
+                FindSection(sectionName).Remove(dataKey);
+                return true;
             }
-            
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Section FindLastSection()
         {
             return Sections[Sections.Count-1];
@@ -144,33 +175,20 @@ namespace BPS
         {
             if (SectionExists(sectionName))
             {
-                foreach (Data d in FindSection(sectionName).Data)
-                {
-                    if (d.Key.Equals(dataKey))
-                    {
-                        return d;
-                    }
-                }
+                return FindSection(sectionName).Find(dataKey);
             }
             return null;
         }
 
         /// <summary>
-        /// Find the data in the Sis file
+        /// 
         /// </summary>
-        /// <param name="section">Section where the data is located</param>
-        /// <param name="key">Data key</param>
+        /// <param name="sectionName">Section where the data is located</param>
+        /// <param name="dataKey">Data key</param>
         /// <returns>The required data</returns>
-        public string FindValue(string section, string key)
+        public string FindValue(string sectionName, string dataKey)
         {
-            if (SectionExists(section))
-            {
-                if (DataExists(section, key))
-                {
-                    return FindData(section, key).Value;
-                }
-            }
-            return null;
+            return FindData(sectionName, dataKey).Value;
         }
 
         /// <summary>
@@ -195,10 +213,6 @@ namespace BPS
         }
 
         #endregion Public
-
-        #region Private
-
-        #endregion Private
 
         #endregion Methods
 

@@ -30,7 +30,6 @@ namespace BPS
         {
             List<string> rawData;
             List<List<string>> rawSections;
-
             try
             {
                 rawData = ReadData(Extension.Normalize(path));
@@ -85,6 +84,9 @@ namespace BPS
                     // Caso houvesse linhas com apenas comentários, seria removida
                     if (line.Equals(""))
                         continue;
+                    // Remove espaços em branco
+                    if (line[0] == ' ')
+                        line = line.Trim();
                     // Caso ainda haja comentários, termina de remover
                     if (line[0] == '#')
                         continue;
