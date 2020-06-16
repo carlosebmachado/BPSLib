@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+name: BPS
+file_extensions: [bps]
+scope: source.bps
+contexts:
+  main:
+    # comments
+    - match: '#'
+      scope: punctuation.definition.comment.bps
+      push: line_comment
+    # var key
+    - match: '\b+[a-z_a-z]+:\b'
+      scope: constant.numeric.bps
+    # keyword <
+    - match: "^\\s*(<)\\s*\\b[a-z_a-z]+\\b"
+      scope: keyword.control.bps
+    # keyword >
+    - match: "^\\s*(>)\\s*"
+      scope: keyword.control.bps
+
+  line_comment:
+  - meta_scope: comment.line.bps
+  - match: $
+    pop: true
