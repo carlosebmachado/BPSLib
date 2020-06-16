@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BPS_Tools.Back
+namespace BPSTools.Back
 {
-    class Main
+    public class File
     {
-
     }
 }

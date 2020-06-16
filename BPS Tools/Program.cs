@@ -1,8 +1,6 @@
-﻿using BPS_Tools.Front;
-using System;
-using System.Windows.Forms;
+﻿using System;
 
-namespace BPS_Tools
+namespace BPSTools
 {
     static class Program
     {

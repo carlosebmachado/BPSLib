@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
-namespace BPS_Tools.Front
+namespace BPSTools.Front
 {
     public partial class Application : Form
     {
         public Application()
         {
             InitializeComponent();
+        }
+
+        private void New(object sender, System.EventArgs e)
+        {
+            tbFiles.TabPages.Add(new TabPage("new file"));
         }
     }
 }

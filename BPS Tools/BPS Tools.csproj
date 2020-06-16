@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3F1E27C7-AF67-48DC-92FE-58F9A5BF77AF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>BPS_Tools</RootNamespace>
+    <RootNamespace>BPSTools</RootNamespace>
     <AssemblyName>BPS Tools</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,17 +46,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Back\Main.cs" />
+    <Compile Include="Back\File.cs" />
     <Compile Include="Front\Application.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Front\Application.Designer.cs">
       <DependentUpon>Application.cs</DependentUpon>
     </Compile>
+    <Compile Include="Front\File.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Front\File.Designer.cs">
+      <DependentUpon>File.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Front\Application.resx">
       <DependentUpon>Application.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Front\File.resx">
+      <DependentUpon>File.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -66,6 +75,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

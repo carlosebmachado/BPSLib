@@ -1,4 +1,4 @@
-﻿namespace BPS_Tools.Front
+﻿namespace BPSTools.Front
 {
     partial class Application
     {
@@ -30,9 +30,14 @@
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.tsmiFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiView = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.edgeMenuStrip = new System.Windows.Forms.Panel();
+            this.tbFiles = new System.Windows.Forms.TabControl();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,21 +50,45 @@
             this.tsmiHelp});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(784, 24);
+            this.menuStrip.Size = new System.Drawing.Size(800, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu Strip";
             // 
             // tsmiFile
             // 
+            this.tsmiFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiNew,
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.tsmiFile.Name = "tsmiFile";
             this.tsmiFile.Size = new System.Drawing.Size(37, 20);
             this.tsmiFile.Text = "File";
             // 
-            // tsmiHelp
+            // tsmiNew
             // 
-            this.tsmiHelp.Name = "tsmiHelp";
-            this.tsmiHelp.Size = new System.Drawing.Size(44, 20);
-            this.tsmiHelp.Text = "Help";
+            this.tsmiNew.Name = "tsmiNew";
+            this.tsmiNew.Size = new System.Drawing.Size(180, 22);
+            this.tsmiNew.Text = "New";
+            this.tsmiNew.Click += new System.EventHandler(this.New);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
             // 
             // tsmiView
             // 
@@ -67,26 +96,42 @@
             this.tsmiView.Size = new System.Drawing.Size(44, 20);
             this.tsmiView.Text = "View";
             // 
+            // tsmiHelp
+            // 
+            this.tsmiHelp.Name = "tsmiHelp";
+            this.tsmiHelp.Size = new System.Drawing.Size(44, 20);
+            this.tsmiHelp.Text = "Help";
+            // 
             // edgeMenuStrip
             // 
-            this.edgeMenuStrip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.edgeMenuStrip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.edgeMenuStrip.BackColor = System.Drawing.Color.WhiteSmoke;
             this.edgeMenuStrip.Location = new System.Drawing.Point(0, 22);
             this.edgeMenuStrip.Name = "edgeMenuStrip";
-            this.edgeMenuStrip.Size = new System.Drawing.Size(800, 2);
+            this.edgeMenuStrip.Size = new System.Drawing.Size(816, 2);
             this.edgeMenuStrip.TabIndex = 1;
             // 
-            // MainForm
+            // tbFiles
+            // 
+            this.tbFiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbFiles.Location = new System.Drawing.Point(0, 24);
+            this.tbFiles.Name = "tbFiles";
+            this.tbFiles.SelectedIndex = 0;
+            this.tbFiles.Size = new System.Drawing.Size(800, 426);
+            this.tbFiles.TabIndex = 2;
+            // 
+            // Application
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(784, 411);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.tbFiles);
             this.Controls.Add(this.edgeMenuStrip);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "MainForm";
+            this.Name = "Application";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BPS Tools";
             this.menuStrip.ResumeLayout(false);
@@ -103,6 +148,11 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiView;
         private System.Windows.Forms.ToolStripMenuItem tsmiHelp;
         private System.Windows.Forms.Panel edgeMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem tsmiNew;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.TabControl tbFiles;
     }
 }
 
