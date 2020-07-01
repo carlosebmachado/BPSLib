@@ -15,6 +15,7 @@ namespace BPS
 
         #endregion Vars
 
+
         #region Constructors
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace BPS
         }
 
         #endregion Constructors
+
 
         #region Methods
 

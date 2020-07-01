@@ -80,11 +80,11 @@ namespace BPS
         }
 
         
-        public bool Remove(string key)
+        public bool Remove(string dataKey)
         {
             foreach (var d in Data)
             {
-                if (d.Key.Equals(key))
+                if (d.Key.Equals(dataKey))
                 {
                     Data.Remove(d);
                     return true;
@@ -115,7 +115,7 @@ namespace BPS
         
         public bool Exists(string dataKey)
         {
-            return Find(dataKey) != null ? true : false;
+            return Find(dataKey) != null;
         }
 
         #endregion Public

@@ -1,4 +1,4 @@
-﻿using BPS.Auxiliary;
+﻿using BPS.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +13,7 @@ namespace BPS
         /// <summary></summary>
         private const string ERR_OPEN_NEW_WOUT_CLOSE_PREV = "Trying to open a new section without closing the previous one.";
         /// <summary></summary>
-        private const string ERR_CLOSE_WOUT_OPEN_PREV = "Section was closed without having been opened previously.";
+        private const string ERR_CLOSE_WOUT_OPEN_PREV = "Section was closed without opened previously.";
 
         #endregion Vars
 

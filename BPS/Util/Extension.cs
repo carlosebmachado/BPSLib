@@ -1,4 +1,4 @@
-﻿namespace BPS.Auxiliary
+﻿namespace BPS.Util
 {
     internal class Extension
     {

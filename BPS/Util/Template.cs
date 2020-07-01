@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BPS.Auxiliary
+namespace BPS.Util
 {
     internal class Template
     {

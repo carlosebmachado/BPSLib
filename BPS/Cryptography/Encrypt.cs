@@ -3,9 +3,9 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BPS.Auxiliary
+namespace BPS.Cryptography
 {
-    internal class BPSCryptography
+    internal class Encrypt
     {
         #region Vars
 
@@ -18,13 +18,14 @@ namespace BPS.Auxiliary
 
         #endregion Vars
 
+
         #region Constructors
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
-        internal BPSCryptography(byte[] key)
+        internal Encrypt(byte[] key)
         {
             Key = key;
             InitVector = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
@@ -36,7 +37,7 @@ namespace BPS.Auxiliary
         /// </summary>
         /// <param name="key"></param>
         /// <param name="initVector"></param>
-        internal BPSCryptography(byte[] key, byte[] initVector)
+        internal Encrypt(byte[] key, byte[] initVector)
         {
             Key = key;
             InitVector = initVector;
@@ -44,6 +45,7 @@ namespace BPS.Auxiliary
         }
 
         #endregion Constructors
+
 
         #region Methods
 
@@ -54,7 +56,7 @@ namespace BPS.Auxiliary
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal string Encrypt(string data)
+        internal string Execute(string data)
         {
             byte[] encryptedData;
             byte[] dataToProtectAsArray = Encoding.UTF8.GetBytes(data);
