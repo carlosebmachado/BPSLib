@@ -59,12 +59,6 @@ namespace BPS
 
         #endregion Public
 
-        #region Private
-
-
-
-        #endregion Private
-
         #endregion Methods
 
     }

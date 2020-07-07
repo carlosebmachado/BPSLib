@@ -77,7 +77,7 @@ namespace BPS
                     if (line.Equals(""))
                         continue;
                     // Remove espaços em branco
-                    if (line[0] == ' ')
+                    if (line[0].Equals(' '))
                         line = line.Trim();
                     // Remove comentários
                     line = RemoveComments(line);
@@ -85,10 +85,14 @@ namespace BPS
                     if (line.Equals(""))
                         continue;
                     // Remove espaços em branco
-                    if (line[0] == ' ')
+                    if (line[0].Equals(' '))
                         line = line.Trim();
                     // Caso ainda haja comentários, termina de remover
-                    if (line[0] == '#')
+                    if (line[0].Equals('#'))
+                        continue;
+                    // Caso ainda sobre alguma linha vazia
+                    line = line.Trim();
+                    if (line.Equals(""))
                         continue;
                     // Se a linha passou por todas as verificações é adicionada às linhas válidas
                     data.Add(line);

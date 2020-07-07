@@ -145,10 +145,10 @@ namespace BPS
         /// 
         /// </summary>
         /// <returns></returns>
-        public Section FindLastSection()
-        {
-            return Sections[Sections.Count-1];
-        }
+        //public Section FindLastSection()
+        //{
+        //    return Sections[Sections.Count-1];
+        //}
 
         /// <summary>
         /// 
