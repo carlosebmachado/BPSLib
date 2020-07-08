@@ -26,5 +26,33 @@
         }
 
         #endregion Constructors
+
+        #region Methods
+
+        #region Public
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newKey"></param>
+        /// <returns></returns>
+        public void AlterKey(string newKey)
+        {
+            Key = newKey;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
+        public void AlterValue(string newValue)
+        {
+            Value = newValue;
+        }
+
+        #endregion Public
+
+        #endregion Methods
     }
 }
