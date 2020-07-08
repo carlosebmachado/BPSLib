@@ -6,109 +6,78 @@ namespace BPS
     {
         #region Vars
 
-        /// <summary></summary>
+        /// <summary>The name of the section</summary>
         public string Name { get; set; }
-        /// <summary></summary>
-        public List<Data> Data { get; set; }
+        private readonly List<Data> _data;
 
         #endregion Vars
+
 
         #region Constructors
 
         /// <summary>
-        /// 
+        /// Constructor with name and a list of data
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="data"></param>
+        /// <param name="name">The name of the section</param>
+        /// <param name="data">A list of data</param>
         public Section(string name, List<Data> data)
         {
             Name = name;
-            Data = data;
+            _data = data;
         }
 
         /// <summary>
-        /// 
+        /// Constructor with just name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the section</param>
         public Section(string name)
         {
             Name = name;
-            Data = new List<Data>();
+            _data = new List<Data>();
         }
 
         #endregion Constructors
+
 
         #region Methods
 
         #region Public
 
         /// <summary>
-        /// 
+        /// Adds a new Data in the section
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="data">Data to be add</param>
+        /// <returns>If can add will return true, else false</returns>
         public bool Add(Data data)
         {
             if (!Exists(data.Key))
             {
-                Data.Add(data);
+                _data.Add(data);
                 return true;
             }
             return false;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataKey"></param>
-        /// <param name="newDataKey"></param>
-        /// <returns></returns>
-        public bool AlterKey(string dataKey, string newDataKey)
-        {
-            if (Exists(dataKey))
-            {
-                Find(dataKey).Key = newDataKey;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataKey"></param>
-        /// <param name="newValue"></param>
-        /// <returns></returns>
-        public bool AlterValue(string dataKey, string newValue)
-        {
-            if (Exists(dataKey))
-            {
-                Find(dataKey).Value = newValue;
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// 
+        /// Removes all data of section
         /// </summary>
         public void RemoveAll()
         {
-            Data.Clear();
+            _data.Clear();
         }
 
         /// <summary>
-        /// 
+        /// Removes the data that contains the key passed by parameter
         /// </summary>
-        /// <param name="dataKey"></param>
-        /// <returns></returns>
-        public bool Remove(string dataKey)
+        /// <param name="key">Key to remove</param>
+        /// <returns>If can remove will return true, else false</returns>
+        public bool Remove(string key)
         {
-            foreach (var d in Data)
+            foreach (var d in _data)
             {
-                if (d.Key.Equals(dataKey))
+                if (d.Key.Equals(key))
                 {
-                    Data.Remove(d);
+                    _data.Remove(d);
                     return true;
                 }
             }
@@ -116,15 +85,24 @@ namespace BPS
         }
 
         /// <summary>
-        /// 
+        /// Finds all data in section
         /// </summary>
-        /// <param name="dataKey"></param>
-        /// <returns></returns>
-        public Data Find(string dataKey)
+        /// <returns>A array with all data</returns>
+        public Data[] FindAll()
         {
-            foreach(Data d in Data)
+            return _data.ToArray();
+        }
+
+        /// <summary>
+        /// Finds a unique data that contains the key passed by parameter
+        /// </summary>
+        /// <param name="key">Key to find</param>
+        /// <returns>The data if finds it, else return null</returns>
+        public Data Find(string key)
+        {
+            foreach(Data d in _data)
             {
-                if (d.Key.Equals(dataKey))
+                if (d.Key.Equals(key))
                 {
                     return d;
                 }
@@ -133,23 +111,13 @@ namespace BPS
         }
 
         /// <summary>
-        /// 
+        /// Check if a data exists
         /// </summary>
-        /// <param name="dataKey"></param>
-        /// <returns></returns>
-        public string FindValue(string dataKey)
+        /// <param name="key">Key to check</param>
+        /// <returns>True if exists, else false</returns>
+        public bool Exists(string key)
         {
-            return Find(dataKey).Value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dataKey"></param>
-        /// <returns></returns>
-        public bool Exists(string dataKey)
-        {
-            return Find(dataKey) != null;
+            return Find(key) != null;
         }
 
         #endregion Public

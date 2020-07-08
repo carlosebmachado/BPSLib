@@ -6,16 +6,22 @@ using System.Linq;
 
 namespace BPS
 {
-    public class BPSReader
+    public class BPSIO
     {
         #region Vars
 
-        /// <summary></summary>
         private const string ERR_OPEN_NEW_WOUT_CLOSE_PREV = "Trying to open a new section without closing the previous one.";
-        /// <summary></summary>
         private const string ERR_CLOSE_WOUT_OPEN_PREV = "Section was closed without opened previously.";
 
+        private const string KV_HEADER = "# BPS File";
+        private const string KV_NEXTLINE = "\n";
+        private const string KV_LAB = "<";
+        private const string KV_RAB = ">";
+        private const string KV_TAB = "    ";
+        private const string KV_SEPARATOR = ":";
+
         #endregion Vars
+
 
         #region Methods
 
@@ -26,7 +32,7 @@ namespace BPS
         /// </summary>
         /// <param name="path">File path</param>
         /// <returns>File readed</returns>
-        public static BPSFile Read(string path)
+        public static File Read(string path)
         {
             List<string> rawData;
             List<List<string>> rawSections;
@@ -50,18 +56,43 @@ namespace BPS
 
             // Secure functions
             DistributeSections(rawSections, rawData);
-            return new BPSFile(CreateSections(rawSections));
+            return new File(CreateSections(rawSections));
+        }
+
+        /// <summary>
+        /// Write a BPS file
+        /// </summary>
+        /// <param name="file">The file to be write</param>
+        public static void Write(File file, string path)
+        {
+            try
+            {
+                StreamWriter wf = new StreamWriter(Extension.Normalize(path));
+
+                wf.WriteLine(KV_HEADER + KV_NEXTLINE);
+
+                foreach (Section section in file.FindAll())
+                {
+                    wf.WriteLine(KV_LAB + section.Name);
+                    foreach (Data data in section.FindAll())
+                    {
+                        wf.WriteLine(KV_TAB + data.Key + KV_SEPARATOR + data.Value);
+                    }
+                    wf.WriteLine(KV_RAB + KV_NEXTLINE);
+                }
+                wf.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion Public
 
+
         #region Private
 
-        /// <summary>
-        /// Reads and clears all lines from the file passed by the path
-        /// </summary>
-        /// <param name="path">File path</param>
-        /// <returns>A list of all lines in the file</returns>
         private static List<string> ReadData(string path)
         {
             try
@@ -106,11 +137,6 @@ namespace BPS
             }
         }
 
-        /// <summary>
-        /// Removes comments on a valid line
-        /// </summary>
-        /// <param name="str">The string that will be removed from the comment</param>
-        /// <returns>A string without the comment</returns>
         private static string RemoveComments(string str)
         {
             // Divide e retorna apenas a parte esquerda da linha
@@ -120,11 +146,6 @@ namespace BPS
             return r[0];
         }
 
-        /// <summary>
-        /// Initializes rawSections with the required number of sections
-        /// </summary>
-        /// <param name="data">Raw data</param>
-        /// <returns>A list ready to receive data separated by sections</returns>
         private static List<List<string>> PrepareRawSections(List<string> data)
         {
             List<List<string>> rawSections = new List<List<string>>();
@@ -164,11 +185,6 @@ namespace BPS
             return rawSections;
         }
 
-        /// <summary>
-        /// Distribute variables to sections
-        /// </summary>
-        /// <param name="rawSections">Untreated sections</param>
-        /// <param name="data">Untreated data</param>
         private static void DistributeSections(List<List<string>> rawSections, List<string> data)
         {
             // Loop para cada seção encontrada anteriormente
@@ -185,10 +201,6 @@ namespace BPS
             }
         }
 
-        /// <summary>
-        /// Creates sections
-        /// </summary>
-        /// <param name="rawSections">Separate but untreated sections</param>
         private static List<Section> CreateSections(List<List<string>> rawSections)
         {
             List<Section> sections = new List<Section>();
@@ -221,7 +233,7 @@ namespace BPS
                     // Divide pelo ':'
                     var r = s.Split(':');
                     // Cria um novo dado com key e data
-                    sections[sections.Count() - 1].Data.Add(new Data(r[0], r[1]));
+                    sections[sections.Count() - 1].Add(new Data(r[0], r[1]));
                 }
             }
             return sections;

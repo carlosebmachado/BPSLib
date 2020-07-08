@@ -4,21 +4,22 @@
     {
         #region Vars
 
-        /// <summary></summary>
+        /// <summary>The data key</summary>
         public string Key { get; set; }
 
-        /// <summary></summary>
+        /// <summary>The data value</summary>
         public string Value { get; set; }
 
         #endregion Vars
 
+
         #region Constructors
 
         /// <summary>
-        /// 
+        /// Constructor with key and value
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="key">The key of the data</param>
+        /// <param name="value">The value of the data</param>
         public Data(string key, string value)
         {
             Key = key;
@@ -26,33 +27,5 @@
         }
 
         #endregion Constructors
-
-        #region Methods
-
-        #region Public
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newKey"></param>
-        /// <returns></returns>
-        public void AlterKey(string newKey)
-        {
-            Key = newKey;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newValue"></param>
-        /// <returns></returns>
-        public void AlterValue(string newValue)
-        {
-            Value = newValue;
-        }
-
-        #endregion Public
-
-        #endregion Methods
     }
 }
