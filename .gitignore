@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Java/BPS/nbproject/private/
+/Java/BPS/build/
+/Java/BPS/dist/
