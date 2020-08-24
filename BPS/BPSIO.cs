@@ -212,7 +212,7 @@ namespace BPS
                     {
                         break;
                     }
-                    // Senão entrou em nenhum if anterior, significa que é uma variável e será adicionada a seção
+                    // Senão entrou em nenhum if anterior, significa que é uma key/value e será adicionada a seção
                     // Divide pelo ':'
                     var r = s.Split(':');
                     // Cria um novo dado com key e data
