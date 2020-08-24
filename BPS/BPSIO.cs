@@ -11,7 +11,7 @@ namespace BPS
         #region Vars
 
         private const string ERR_OPEN_NEW_WOUT_CLOSE_PREV = "Trying to open a new section without closing the previous one.";
-        private const string ERR_CLOSE_WOUT_OPEN_PREV = "Section was closed without opened previously.";
+        private const string ERR_CLOSE_WOUT_OPEN_PREV = "Section was closed without open it previously.";
 
         private const string KV_HEADER = "# BPS File";
         private const string KV_NEXTLINE = "\n";
@@ -34,11 +34,12 @@ namespace BPS
         /// <returns>File readed</returns>
         public static File Read(string path)
         {
-            List<string> rawData;
-            List<List<string>> rawSections;
+            List<string> data;
+            File file;
+
             try
             {
-                rawData = ReadData(Extension.Normalize(path));
+                data = LexicalAnalysis(Extension.Normalize(path));
             }
             catch (Exception ex)
             {
@@ -47,16 +48,14 @@ namespace BPS
 
             try
             {
-                rawSections = PrepareRawSections(rawData);
+                file = Parser(data);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            // Secure functions
-            DistributeSections(rawSections, rawData);
-            return new File(CreateSections(rawSections));
+            return file;
         }
 
         /// <summary>
@@ -93,7 +92,7 @@ namespace BPS
 
         #region Private
 
-        private static List<string> ReadData(string path)
+        private static List<string> LexicalAnalysis(string path)
         {
             try
             {
@@ -137,19 +136,12 @@ namespace BPS
             }
         }
 
-        private static string RemoveComments(string str)
-        {
-            // Divide e retorna apenas a parte esquerda da linha
-            // A parte direita é apenas comentário
-            var r = str.Split('#');
-            r[0] = r[0].Trim();
-            return r[0];
-        }
-
-        private static List<List<string>> PrepareRawSections(List<string> data)
+        private static File Parser(List<string> data)
         {
             List<List<string>> rawSections = new List<List<string>>();
+            List<Section> sections = new List<Section>();
             bool open = false;
+
             // Procura nos dados brutos, as seções
             foreach (string d in data)
             {
@@ -180,13 +172,9 @@ namespace BPS
                         open = false;
                     }
                 }
-                    
-            }
-            return rawSections;
-        }
 
-        private static void DistributeSections(List<List<string>> rawSections, List<string> data)
-        {
+            }
+
             // Loop para cada seção encontrada anteriormente
             for (int i = 0; i < rawSections.Count(); i++)
             {
@@ -199,11 +187,6 @@ namespace BPS
                     if (curLine.Equals(">")) break;
                 }
             }
-        }
-
-        private static List<Section> CreateSections(List<List<string>> rawSections)
-        {
-            List<Section> sections = new List<Section>();
 
             // Percorre rawSections criando as variáveis
             foreach (List<string> sec in rawSections)
@@ -236,7 +219,17 @@ namespace BPS
                     sections[sections.Count() - 1].Add(new Data(r[0], r[1]));
                 }
             }
-            return sections;
+
+            return new File(sections);
+        }
+
+        private static string RemoveComments(string str)
+        {
+            // Divide e retorna apenas a parte esquerda da linha
+            // A parte direita é apenas comentário
+            var r = str.Split('#');
+            r[0] = r[0].Trim();
+            return r[0];
         }
 
         #endregion Private
