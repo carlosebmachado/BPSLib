@@ -10,4 +10,8 @@
     <None Remove="Release\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Util\" />
+  </ItemGroup>
+
 </Project>
