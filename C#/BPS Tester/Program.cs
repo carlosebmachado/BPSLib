@@ -6,7 +6,7 @@ namespace Tester
     class Program
     {
 
-        public const string path = "D:/Documentos/OneDrive/DESKTOP/C#/BPSLib/";
+        public const string path = "D:/Documentos/OneDrive/DESKTOP/BPSLib/";
         public const string wf = "write_test";
         public const string rf = "read_test.bps";
 

@@ -91,10 +91,13 @@ namespace BPS
         /// <returns>If can remove will return true, else false</returns>
         public bool Remove(string name)
         {
-            if (Exists(name))
+            foreach (Section s in _sections)
             {
-                _sections.Remove(Find(name));
-                return true;
+                if (s.Name.Equals(name))
+                {
+                    _sections.Remove(s);
+                    return true;
+                }
             }
             return false;
         }

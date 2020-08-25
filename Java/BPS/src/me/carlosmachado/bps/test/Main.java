@@ -4,7 +4,7 @@ import me.carlosmachado.bps.*;
 
 class Main {
 
-    public static final String path = "D:/Documentos/OneDrive/DESKTOP/C#/BPSLib/";
+    public static final String path = "D:/Documentos/OneDrive/DESKTOP/BPSLib/";
     public static final String wf = "write_test";
     public static final String rf = "read_test.bps";
     

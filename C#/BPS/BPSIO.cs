@@ -22,7 +22,6 @@
  * THE SOFTWARE.
  */
 
-using BPS.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,6 +43,8 @@ namespace BPS
         private const string KV_TAB = "    ";
         private const string KV_SEPARATOR = ":";
 
+        internal const string FILENAME_EXTENSION = ".bps";
+
         #endregion Vars
 
 
@@ -63,7 +64,7 @@ namespace BPS
 
             try
             {
-                data = LexicalAnalysis(Extension.Normalize(path));
+                data = LexicalAnalysis(Normalize(path));
             }
             catch (Exception ex)
             {
@@ -90,7 +91,7 @@ namespace BPS
         {
             try
             {
-                StreamWriter wf = new StreamWriter(Extension.Normalize(path));
+                StreamWriter wf = new StreamWriter(Normalize(path));
 
                 wf.WriteLine(KV_HEADER + KV_NEXTLINE);
 
@@ -213,7 +214,7 @@ namespace BPS
             }
 
             // Percorre rawSections criando as variáveis
-            foreach (List<string> sec in rawSections)
+            foreach (var sec in rawSections)
             {
                 // Remove qualquer linha que não começe com '<'
                 // PROVAVELMENTE SERÁ REMOVIDA
@@ -254,6 +255,34 @@ namespace BPS
             var r = str.Split('#');
             r[0] = r[0].Trim();
             return r[0];
+        }
+
+        /// <summary>
+        /// Insert BPS extension on filename
+        /// </summary>
+        /// <param name="path">File path</param>
+        internal static string Normalize(string path)
+        {
+            int length = path.Length;
+            if (length > 4)
+            {
+                if (!path.Substring(length - 4, 4).Equals(FILENAME_EXTENSION))
+                {
+                    return path + FILENAME_EXTENSION;
+                }
+                else
+                {
+                    return path;
+                }
+            }
+            else if (path.Equals(FILENAME_EXTENSION))
+            {
+                return path;
+            }
+            else
+            {
+                return path + FILENAME_EXTENSION;
+            }
         }
 
         #endregion Private

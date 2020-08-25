@@ -49,15 +49,17 @@ public class File {
         }
         return false;
     }
-    
+
     public void removeAll() {
         sections.clear();
     }
 
     public boolean remove(String name) {
-        if (exists(name)) {
-            sections.remove(find(name));
-            return true;
+        for (Section s : sections) {
+            if (s.name.equals(name)) {
+                sections.remove(s);
+                return true;
+            }
         }
         return false;
     }
