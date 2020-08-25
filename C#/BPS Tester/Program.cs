@@ -5,8 +5,8 @@ namespace Tester
 {
     class Program
     {
-
         public const string path = "D:/Documentos/OneDrive/DESKTOP/BPSLib/";
+        //public const string path = "C:/Users/Panificadora Larissa/OneDrive/DESKTOP/BPSLib/";
         public const string wf = "write_test";
         public const string rf = "read_test.bps";
 
@@ -40,6 +40,15 @@ namespace Tester
             BPSIO.Write(bpsFile, path+wf);
         }
 
+        public static void RemoveData_Test()
+        {
+            File bpsFile = BPSIO.Read(path + rf);
+
+            bpsFile.Find("section").Remove("key");
+
+            BPSIO.Write(bpsFile, path + wf);
+        }
+
         public static void RemoveSection_Test()
         {
             File bpsFile = BPSIO.Read(path + rf);
@@ -54,15 +63,6 @@ namespace Tester
             File bpsFile = BPSIO.Read(path + rf);
 
             Console.WriteLine(bpsFile.Exists("section"));
-
-            BPSIO.Write(bpsFile, path + wf);
-        }
-
-        public static void RemoveData_Test()
-        {
-            File bpsFile = BPSIO.Read(path + rf);
-
-            bpsFile.Find("section").Remove("key");
 
             BPSIO.Write(bpsFile, path + wf);
         }

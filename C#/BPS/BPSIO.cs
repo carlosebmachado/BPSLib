@@ -59,72 +59,16 @@ namespace BPS
         /// <returns>File readed</returns>
         public static File Read(string path)
         {
-            List<string> data;
-            File file;
+            List<string> data = new List<string>();
+            List<List<string>> rawSections = new List<List<string>>();
+            List<Section> sections = new List<Section>();
+            bool open = false;
 
             try
             {
-                data = LexicalAnalysis(Normalize(path));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            try
-            {
-                file = Parser(data);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return file;
-        }
-
-        /// <summary>
-        /// Write a BPS file
-        /// </summary>
-        /// <param name="file">The file to be write</param>
-        public static void Write(File file, string path)
-        {
-            try
-            {
-                StreamWriter wf = new StreamWriter(Normalize(path));
-
-                wf.WriteLine(KV_HEADER + KV_NEXTLINE);
-
-                foreach (Section section in file.FindAll())
-                {
-                    wf.WriteLine(KV_LAB + section.Name);
-                    foreach (Data data in section.FindAll())
-                    {
-                        wf.WriteLine(KV_TAB + data.Key + KV_SEPARATOR + data.Value);
-                    }
-                    wf.WriteLine(KV_RAB + KV_NEXTLINE);
-                }
-                wf.Close();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        #endregion Public
-
-
-        #region Private
-
-        private static List<string> LexicalAnalysis(string path)
-        {
-            try
-            {
-                List<string> data = new List<string>();
                 string line;
 
-                StreamReader file = new StreamReader(path);
+                StreamReader file = new StreamReader(NormalizePath(path));
 
                 while ((line = file.ReadLine()) != null)
                 {
@@ -153,19 +97,11 @@ namespace BPS
                     data.Add(line);
                 }
                 file.Close();
-                return data;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        private static File Parser(List<string> data)
-        {
-            List<List<string>> rawSections = new List<List<string>>();
-            List<Section> sections = new List<Section>();
-            bool open = false;
 
             // Procura nos dados brutos, as seções
             foreach (string d in data)
@@ -214,32 +150,32 @@ namespace BPS
             }
 
             // Percorre rawSections criando as variáveis
-            foreach (var sec in rawSections)
+            foreach (var rawSection in rawSections)
             {
                 // Remove qualquer linha que não começe com '<'
                 // PROVAVELMENTE SERÁ REMOVIDA
-                while (!sec[0][0].Equals('<'))
+                while (!rawSection[0][0].Equals('<'))
                 {
-                    sec.RemoveAt(0);
+                    rawSection.RemoveAt(0);
                 }
-                foreach (string s in sec)
+                foreach (string rs_lines in rawSection)
                 {
                     // Se estiver abrindo a seção
-                    if (s[0].Equals('<'))
+                    if (rs_lines[0].Equals('<'))
                     {
-                        string newS = s.Substring(1, s.Length - 1);
+                        string newS = rs_lines.Substring(1, rs_lines.Length - 1);
                         sections.Add(new Section(newS));
                         //sections[sections.Count() - 1].Name = newS;
                         continue;
                     }
                     // Encontrou o fim da seção
-                    if (s.Equals(">"))
+                    if (rs_lines.Equals(">"))
                     {
                         break;
                     }
                     // Senão entrou em nenhum if anterior, significa que é uma key/value e será adicionada a seção
                     // Divide pelo ':'
-                    var r = s.Split(':');
+                    var r = rs_lines.Split(':');
                     // Cria um novo dado com key e data
                     sections[sections.Count() - 1].Add(new Data(r[0], r[1]));
                 }
@@ -247,6 +183,40 @@ namespace BPS
 
             return new File(sections);
         }
+
+        /// <summary>
+        /// Write a BPS file
+        /// </summary>
+        /// <param name="file">The file to be write</param>
+        public static void Write(File file, string path)
+        {
+            try
+            {
+                StreamWriter wf = new StreamWriter(NormalizePath(path));
+
+                wf.WriteLine(KV_HEADER + KV_NEXTLINE);
+
+                foreach (Section section in file.FindAll())
+                {
+                    wf.WriteLine(KV_LAB + section.Name);
+                    foreach (Data data in section.FindAll())
+                    {
+                        wf.WriteLine(KV_TAB + data.Key + KV_SEPARATOR + data.Value);
+                    }
+                    wf.WriteLine(KV_RAB + KV_NEXTLINE);
+                }
+                wf.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion Public
+
+
+        #region Private
 
         private static string RemoveComments(string str)
         {
@@ -261,7 +231,7 @@ namespace BPS
         /// Insert BPS extension on filename
         /// </summary>
         /// <param name="path">File path</param>
-        internal static string Normalize(string path)
+        internal static string NormalizePath(string path)
         {
             int length = path.Length;
             if (length > 4)

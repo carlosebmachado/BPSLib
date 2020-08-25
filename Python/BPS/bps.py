@@ -68,11 +68,11 @@ class Section:
     def remove(self, key: str) -> bool:
         for d in self.data:
             if d.key == key:
-                del self.data[d]
+                self.data.remove(d)
                 return True
         return False
 
-    def find_all(self) -> Data:
+    def find_all(self):
         return self.data
 
     def find(self, key: str) -> Data:
@@ -106,17 +106,17 @@ class File:
     def remove(self, name: str) -> bool:
         for s in self.sections:
             if s.name == name:
-                del self.sections[s]
+                self.sections.remove(s)
                 return True
         return False
 
-    def find_all(self) -> Section:
+    def find_all(self):
         return self.sections
 
     def find(self, name: str) -> Section:
         for s in self.sections:
             if s.name == name:
-                return self.sections[s]
+                return s
         return None
 
     def exists(self, name: str) -> bool:
@@ -125,12 +125,11 @@ class File:
 
 def read(path: str) -> File:
     data = []
-    file: File
     raw_sections = []
-    sections: [Section]
+    sections: [Section] = []
     op = False
 
-    r = open(path, 'r')
+    r = open(normalize(path), 'r')
     for line in r:
         if line == "":
             continue
@@ -146,7 +145,6 @@ def read(path: str) -> File:
         line = line.strip()
         if line == "":
             continue
-
         data.append(line)
     r.close()
 
@@ -165,35 +163,35 @@ def read(path: str) -> File:
 
     for rs in raw_sections:
         while True:
-            curLine = data[0]
+            cur_line = data[0]
             del data[0]
-            rs.append(curLine)
-            if curLine == ">": break
+            rs.append(cur_line)
+            if cur_line == ">": break
 
     for rs in raw_sections:
         while not rs[0][0] == '<':
             del rs[0]
         for s in rs:
             if s[0] == '<':
-                ns = s[1:len(s)-1]
+                ns = s[1:len(s)]
                 sections.append(Section(ns))
                 continue
             if s == ">":
                 break
             r = s.split(':')
-            sections.append(Data(r[0], r[1]))
+            sections[len(sections) - 1].add(Data(r[0], r[1]))
 
     return File(sections)
 
 
-def write(self, file: File, path: str):
-    w = open(path, 'w')
-    w.write(self.KV_HEADER + self.KV_NEXTLINE)
+def write(file: File, path: str):
+    w = open(normalize(path), 'w')
+    w.write(KV_HEADER + KV_NEXTLINE + KV_NEXTLINE)
     for section in file.sections:
-        w.write(self.KV_LAB + section.name)
+        w.write(KV_LAB + section.name + KV_NEXTLINE)
         for data in section.data:
-            w.write(self.KV_TAB + data.Key + self.KV_SEPARATOR + data.Value)
-        w.write(self.KV_RAB + self.KV_NEXTLINE)
+            w.write(KV_TAB + data.key + KV_SEPARATOR + data.value + KV_NEXTLINE)
+        w.write(KV_RAB + KV_NEXTLINE + KV_NEXTLINE)
     w.close()
 
 
