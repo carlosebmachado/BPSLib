@@ -2,7 +2,7 @@
 
 <section
 	key:value
-	key_underline:Value With Upper
+	key_underscore:Value With Upper
 	keyCammelCase:false
 	Key:value with spaces
 >
